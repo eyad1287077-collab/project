@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESAM ELMEGEDY - International Export Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #764ba2;
+            --secondary: #667eea;
+            --accent: #25d366; /* WhatsApp Color */
+            --dark: #333;
+            --light: #f8f9fa;
+        }
+        body {
+            font-family: 'Poppins', 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #f4f7f6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .login-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        .hero-content {
+            width: 100%;
+            animation: fadeInUp 1s ease;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 1rem;
+            font-family: 'Cairo', sans-serif;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Services Section */
+        .section { padding: 6rem 0; }
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: var(--primary);
+            font-family: 'Cairo', sans-serif;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-card i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Search & Products */
+        .search-section { background: #fff; padding: 4rem 0; }
+        .search-container {
+            max-width: 800px;
+            margin: -8rem auto 0;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .search-box {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            outline: none;
+            margin-bottom: 1rem;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            border-bottom: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); color: white; }
+
+        /* Footer & Contact */
+        .contact-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            text-align: center;
+        }
+        .phone-link {
+            color: white;
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        /* Modal Styles */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+        .login-form {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">ESAM ELMEGEDY</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="login-btn" onclick="openLogin()">Login</button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>ESAM ELMEGEDY</h1>
+            <p>Bridging Markets with Excellence & Reliability</p>
+            <a href="#search" class="cta-btn">Start Exporting</a>
+        </div>
+    </section>
+
+    <section id="search" class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <h2 style="font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem;">What are you looking for?</h2>
+                <input type="text" class="search-box" id="searchInput" placeholder="Search electronics, textiles, agriculture...">
+                <div id="searchResults" class="products-grid" style="display: none;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="container">
+            <h2>Our Global Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Global Shipping</h3>
+                    <p>Efficient logistics solutions connecting continents seamlessly.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h3>Custom Clearance</h3>
+                    <p>Hassle-free documentation and legal compliance handling.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shield-check"></i>
+                    <h3>Quality Control</h3>
+                    <p>Rigorous inspection to ensure international standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="section" style="background: #fdfdfd;">
+        <div class="container">
+            <h2>Featured Categories</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <i class="fas fa-laptop-code fa-2x" style="color:var(--primary)"></i>
+                    <h3 style="margin: 1rem 0;">Electronics</h3>
+                    <p>Premium gadgets and industrial electronic components.</p>
+                    <button class="login-btn" style="width:100%; margin-top:1.5rem;" onclick="requestQuote('Electronics')">Get Quote</button>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-tshirt fa-2x" style="color:var(--primary)"></i>
+                    <h3 style="margin: 1rem 0;">Textiles</h3>
+                    <p>Luxury fabrics and ready-made high-quality garments.</p>
+                    <button class="login-btn" style="width:100%; margin-top:1.5rem;" onclick="requestQuote('Textiles')">Get Quote</button>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-seedling fa-2x" style="color:var(--primary)"></i>
+                    <h3 style="margin: 1rem 0;">Agriculture</h3>
+                    <p>Fresh organic produce from local farms to the world.</p>
+                    <button class="login-btn" style="width:100%; margin-top:1.5rem;" onclick="requestQuote('Agriculture')">Get Quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section section">
+        <div class="container">
+            <h2>Start Your Journey</h2>
+            <p>Our experts are ready to assist your business growth.</p>
+            <a href="tel:+201100042727" class="phone-link">
+                <i class="fas fa-phone-alt"></i> 01100042727
+            </a>
+            <p style="margin-top: 2rem; opacity: 0.8;">Cairo, Egypt | International Export Hub</p>
+        </div>
+    </section>
+
+    <a href="https://wa.me/201100042727" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="loginModal" class="login-modal">
+        <div class="login-form">
+            <span style="float:right; cursor:pointer; font-size:1.5rem;" onclick="closeLogin()">&times;</span>
+            <h2 style="margin-bottom:1.5rem; color:var(--primary)">Welcome Back</h2>
+            <form>
+                <input type="email" placeholder="Email Address" class="search-box" style="border-radius:10px;" required>
+                <input type="password" placeholder="Password" class="search-box" style="border-radius:10px;" required>
+                <button type="submit" class="login-btn" style="width:100%; padding:1rem;">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { name: 'Smartphones', category: 'Electronics', price: 'Wholesale' },
+            { name: 'Egyptian Cotton', category: 'Textiles', price: 'Per Ton' },
+            { name: 'Medjool Dates', category: 'Agriculture', price: 'Per KG' },
+            { name: 'Solar Panels', category: 'Energy', price: 'Inquiry' }
+        ];
+
+        function openLogin() { document.getElementById('loginModal').style.display = 'block'; }
+        function closeLogin() { document.getElementById('loginModal').style.display = 'none'; }
+
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = document.getElementById('searchResults');
+            if (query.length < 2) { results.style.display = 'none'; return; }
+
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            results.innerHTML = filtered.length ? '' : '<p style="grid-column:1/-1">No results found.</p>';
+            
+            filtered.forEach(p => {
+                results.innerHTML += `
+                    <div class="product-card">
+                        <h3>${p.name}</h3>
+                        <p>${p.category} | ${p.price}</p>
+                        <button class="login-btn" style="margin-top:10px" onclick="requestQuote('${p.name}')">Inquire</button>
+                    </div>`;
+            });
+            results.style.display = 'grid';
+        }
+
+        function requestQuote(name) {
+            alert(`Thank you! A quote for ${name} has been sent to your dashboard. We will contact you at 01100042727.`);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', searchProducts);
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('loginModal')) closeLogin();
+        }
+    </script>
+</body>
+</html>
