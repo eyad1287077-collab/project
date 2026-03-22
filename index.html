@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileVault Pro - Professional File Release & Export</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/6.0.0-beta.2/dropzone-min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/6.0.0-beta.2/dropzone.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dropzone { border: 2px dashed #3b82f6; background: transparent; border-radius: 1.5rem; }
+        .dark .dropzone { border-color: #60a5fa; background: #1e293b; }
+        .file-item { transition: all 0.3s ease; }
+        .file-item:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        body { transition: background-color 0.3s, color 0.3s; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 dark:text-white min-h-screen">
+    <nav class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-cloud-upload-alt text-2xl text-blue-600 mr-3"></i>
+                    <span class="text-2xl font-bold text-gray-900 dark:text-white">FileVault Pro</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#dashboard" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    <a href="#releases" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Releases</a>
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 text-gray-600 dark:text-yellow-400">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-20 pb-12 max-w-7xl mx-auto px-4 text-center">
+        <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+            Professional File Release & Export
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+            Manage your C++ and Python projects releases with enterprise-grade security.
+        </p>
+    </section>
+
+    <section id="uploadSection" class="py-10">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl">
+                <h2 class="text-2xl font-bold mb-6 text-center">Drag & Drop File Upload</h2>
+                <form action="/upload" class="dropzone" id="myDropzone">
+                    <div class="dz-message text-center">
+                        <i class="fas fa-cloud-arrow-up text-5xl text-blue-500 mb-4"></i>
+                        <p class="text-lg font-medium">Drop files here or click to browse</p>
+                        <p class="text-sm text-gray-500">Max size: 2GB (PDF, ZIP, EXE, Python)</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden">
+                <div class="p-8 border-b border-gray-100 dark:border-slate-700 flex justify-between items-center">
+                    <h3 class="text-2xl font-bold flex items-center">
+                        <i class="fas fa-clock mr-3 text-blue-600"></i> Recent Files
+                    </h3>
+                    <span class="text-sm text-gray-500" id="fileCount">0 Files found</span>
+                </div>
+                <div id="filesList" class="divide-y divide-gray-100 dark:divide-slate-700">
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-500 dark:text-gray-400">
+        <p>&copy; 2026 FileVault Pro - Built for Alienware Ubuntu Users</p>
+    </footer>
+
+    <script>
+        // 1. تفعيل الـ Dark Mode
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.getElementById('mainHtml');
+        const themeIcon = document.getElementById('themeIcon');
+
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+
+        // 2. بيانات الملفات التجريبية
+        const sampleFiles = [
+            { name: 'C++_Compiler_v1.0.zip', size: '12.4 MB', date: '2 hours ago', icon: 'fa-file-code', color: 'text-blue-500' },
+            { name: 'Automation_Script.py', size: '3.2 KB', date: '5 hours ago', icon: 'fa-file-lines', color: 'text-yellow-500' },
+            { name: 'Project_Documentation.pdf', size: '1.5 MB', date: '1 day ago', icon: 'fa-file-pdf', color: 'text-red-500' }
+        ];
+
+        // 3. وظيفة عرض الملفات في الصفحة
+        function renderFiles() {
+            const filesContainer = document.getElementById('filesList');
+            const fileCountText = document.getElementById('fileCount');
+            filesContainer.innerHTML = '';
+            
+            sampleFiles.forEach(file => {
+                const html = `
+                    <div class="p-6 flex items-center justify-between hover:bg-blue-50 dark:hover:bg-slate-700/50 transition-all cursor-pointer file-item">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-xl bg-gray-100 dark:bg-slate-700 flex items-center justify-center mr-4">
+                                <i class="fas ${file.icon} ${file.color} text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-gray-900 dark:text-white">${file.name}</p>
+                                <p class="text-sm text-gray-500">${file.size} • ${file.date}</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="p-2 hover:bg-white dark:hover:bg-slate-600 rounded-lg text-blue-600 transition-colors">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="p-2 hover:bg-white dark:hover:bg-slate-600 rounded-lg text-gray-400 transition-colors">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                filesContainer.innerHTML += html;
+            });
+            fileCountText.innerText = `${sampleFiles.length} Files found`;
+        }
+
+        // تشغيل العرض عند تحميل الصفحة
+        renderFiles();
+
+        // 4. إعداد الـ Dropzone
+        Dropzone.autoDiscover = false;
+        const myDropzone = new Dropzone("#myDropzone", {
+            url: "#", // هنا نضع رابط الـ API مستقبلاً
+            autoProcessQueue: false,
+            init: function() {
+                this.on("addedfile", file => {
+                    console.log("File added: " + file.name);
+                    // تنبيه بسيط عند إضافة ملف
+                    alert("تم اختيار الملف: " + file.name + "\nكطالب حاسبات، الخطوة الجاية نربط ده بسيرفر Python!");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
